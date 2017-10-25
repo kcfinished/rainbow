@@ -43,7 +43,7 @@ if (cluster.isMaster) {
             res.send(links);
 
         } catch (err) {
-            res.statusCode = 500;
+            res.statusCode = 511;
             res.send(err);
         }
     }));
@@ -60,14 +60,14 @@ if (cluster.isMaster) {
             res.send(images);
 
         } catch (err) {
-            res.statusCode = 500;
+            res.statusCode = 511;
             res.send(err);
         }
     }));
 
     app.get('/', (req, res, next) => {
         res.statusCode = 200;
-        res.send('<a href="extract">extract</a>');
+        res.send('<a href="links?url=www.google.com">links</a><br /><a href="images?url=www.google.com">images</a>');
     });
     if(process.env.NODE_ENV == 'production'){
         app.listen(process.env.PORT);
