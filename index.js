@@ -70,7 +70,7 @@ if (cluster.isMaster) {
         res.send('<a href="extract">extract</a>');
     });
     if(process.env.NODE_ENV == 'production'){
-        app.listen(80);
+        app.listen(process.env.PORT);
     }
     else{
         app.listen(config.port);
