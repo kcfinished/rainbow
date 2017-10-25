@@ -69,8 +69,12 @@ if (cluster.isMaster) {
         res.statusCode = 200;
         res.send('<a href="extract">extract</a>');
     });
-
-    app.listen(config.port);
+    if(process.env.NODE_ENV == 'production'){
+        app.listen(80);
+    }
+    else{
+        app.listen(config.port);
+    }
 
     console.log(`worker #${cluster.worker.id}, listening on port: ${config.port}`);
 }
