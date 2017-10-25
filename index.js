@@ -60,6 +60,7 @@ if (cluster.isMaster) {
             res.send(images);
 
         } catch (err) {
+            console.log('err', err);
             res.statusCode = 511;
             res.send(err);
         }
