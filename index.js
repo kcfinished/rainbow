@@ -70,9 +70,9 @@ if (cluster.isMaster) {
         res.send('<a href="extract">extract</a>');
     });
 
-    app.listen(process.env.OPENSHIFT_NODEJS_PORT);
+    app.listen(config.port);
 
-    console.log(`worker #${cluster.worker.id}, listening on port: ${process.env.OPENSHIFT_NODEJS_PORT}`);
+    console.log(`worker #${cluster.worker.id}, listening on port: ${config.port}`);
 }
 
 
