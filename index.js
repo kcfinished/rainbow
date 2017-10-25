@@ -62,7 +62,7 @@ if (cluster.isMaster) {
         } catch (err) {
             console.log('err', err);
             res.statusCode = 511;
-            res.send(err);
+            res.send(err.toString());
         }
     }));
 
