@@ -3,7 +3,7 @@ const await = require('asyncawait/await');
 const puppeteer = require('puppeteer');
 
 const run = async((url) => {
-    const browser = await(puppeteer.launch());
+    const browser = await(puppeteer.launch({ args: ['--no-sandbox'] }));
     const page = await(browser.newPage());
 
     //await(page.setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'));
