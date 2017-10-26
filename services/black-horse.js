@@ -3,7 +3,7 @@ const await = require('asyncawait/await');
 const puppeteer = require('puppeteer');
 
 const run = async((url) => {
-    const browser = await(puppeteer.launch({ args: ['--no-sandbox'] }));
+    const browser = await(puppeteer.launch({ args: ['--no-sandbox','--disable-setuid-sandbox'], ignoreHTTPSErrors: true }));
     const page = await(browser.newPage());
 
     //await(page.setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'));
@@ -11,7 +11,8 @@ const run = async((url) => {
     await(page.goto(`${url}`, { waitUntil: 'networkidle', timeout: 30000 }));
 
     var dom = await(page.content());
-    browser.close();
+    await(page.close());
+    await(browser.close());
     return dom;
 });
 

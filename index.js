@@ -52,7 +52,7 @@ if (cluster.isMaster) {
         try {
             const uid = uuid();
             let url = req.query.url;
-            console.log(`id: ${uid},req.query.url: ${req.query.url}`);
+            console.log(`id: ${uid}, req.query.url: ${req.query.url}`);
             if(!(/https?/i.test(req.query.url))){
                 url = `http://${req.query.url}`;
             }
