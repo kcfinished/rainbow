@@ -50,10 +50,12 @@ if (cluster.isMaster) {
 
     app.get('/images', async((req, res, next) => {
         try {
-            var uid = uuid();
-
+            const uid = uuid();
+            let url = req.query.url;
             console.log(`id: ${uid},req.query.url: ${req.query.url}`);
-            const url = `http://${req.query.url}`;
+            if(!(/https?/i.test(req.query.url))){
+                url = `http://${req.query.url}`;
+            }
             const dom = await(BlackHorse.Run(url));
             const images = await(BlackHorse.See(dom, url));
             res.statusCode = 200;
