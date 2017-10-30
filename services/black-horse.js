@@ -30,8 +30,8 @@ const ways = async((dom, url) => {
         if (/(?:https?|cdn)/i.test(link)) {
             href_url = link;
         } else {
-            const href_pattern = /(.*?href=")\/?(.*?)(".*)/i;
-            href_url = link.replace(href_pattern, '$1' + `${url}/` + '$2$3');
+            const href_pattern = /(.*?href=")(\/?(.*?))(".*)/i;
+            href_url = link.replace(href_pattern, '$1' + `${url}/` + '$3$4 - $2');
         }
 
         return res + `${href_url}` + '<br />';
@@ -48,8 +48,8 @@ const see = async((dom, url) => {
         if (/(?:https?|cdn)/i.test(link)) {
             href_url = link;
         } else {
-            const href_pattern = /(.*?src=")\/?(.*?)(".*)/i;
-            href_url = link.replace(href_pattern, '$1' + `${url}/` + '$2$3');
+            const href_pattern = /(.*?src=")(\/?(.*?))(".*)/i;
+            href_url = link.replace(href_pattern, '$1' + `${url}/` + '$3$4 - $2');
         }
 
         return res + `${href_url}` + '<br />';
