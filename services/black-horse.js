@@ -28,7 +28,8 @@ const ways = async((dom, url) => {
     const result = raw_links.reduce((res, link) => {
         let href_url = '';
         if (/(?:https?|cdn)/i.test(link)) {
-            href_url = link;
+            const href_pattern = /(.*?href=")(\/?(.*?))(".*)/i;
+            href_url = link.replace(href_pattern, '$1$2$4 - $2');
         } else {
             const href_pattern = /(.*?href=")(\/?(.*?))(".*)/i;
             href_url = link.replace(href_pattern, '$1' + `${url}/` + '$3$4 - $2');
@@ -46,7 +47,8 @@ const see = async((dom, url) => {
     const result = raw.reduce((res, link) => {
         let href_url = '';
         if (/(?:https?|cdn)/i.test(link)) {
-            href_url = link;
+            const href_pattern = /(.*?src=")(\/?(.*?))(".*)/i;
+            href_url = link.replace(href_pattern, '$1$2$4 - $2');
         } else {
             const href_pattern = /(.*?src=")(\/?(.*?))(".*)/i;
             href_url = link.replace(href_pattern, '$1' + `${url}/` + '$3$4 - $2');
