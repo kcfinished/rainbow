@@ -31,6 +31,22 @@ if (cluster.isMaster) {
 
     const uuid = require('uuid-v4');
 
+    app.get('/render', async((req, res, next) => {
+        try {
+            var uid = uuid();
+
+            console.log(`id: ${uid},req.query.url: ${req.query.url}`);
+            const url = `http://${req.query.url}`;
+            const dom = await(BlackHorse.Run(url));
+            res.statusCode = 200;
+            res.send(dom);
+
+        } catch (err) {
+            res.statusCode = 500;
+            res.send(err);
+        }
+    }));
+
     app.get('/links', async((req, res, next) => {
         try {
             var uid = uuid();
@@ -43,7 +59,7 @@ if (cluster.isMaster) {
             res.send(links);
 
         } catch (err) {
-            res.statusCode = 511;
+            res.statusCode = 500;
             res.send(err);
         }
     }));
@@ -63,7 +79,7 @@ if (cluster.isMaster) {
 
         } catch (err) {
             console.log('err', err);
-            res.statusCode = 511;
+            res.statusCode = 500;
             res.send(err.toString());
         }
     }));

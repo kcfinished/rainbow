@@ -7,7 +7,8 @@ const run = async((url) => {
     const page = await(browser.newPage());
 
     try {
-        await(page.setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'));
+        await(page.setUserAgent('Baymax-Cached'));
+        // await(page.setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'));
         await(page.setViewport({ width: 1920, height: 1080 }));
         await(page.goto(`${url}`, { waitUntil: 'networkidle', timeout: 30000 }));
 
