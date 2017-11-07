@@ -32,27 +32,33 @@ if (cluster.isMaster) {
     const uuid = require('uuid-v4');
 
     app.get('/render', async((req, res, next) => {
+        let url = '';
         try {
             var uid = uuid();
-
+            url = req.query.url;
             console.log(`id: ${uid},req.query.url: ${req.query.url}`);
-            const url = `http://${req.query.url}`;
+            if(!(/https?/i.test(req.query.url))){
+                url = `http://${req.query.url}`;
+            }
             const dom = await(BlackHorse.Run(url));
             res.statusCode = 200;
             res.send(dom);
 
         } catch (err) {
             res.statusCode = 500;
-            res.send(err);
+            res.send(`url: ${url}, err: ${err.toString()}`);
         }
     }));
 
     app.get('/links', async((req, res, next) => {
+        let url = '';
         try {
             var uid = uuid();
-
+            url = req.query.url;
             console.log(`id: ${uid},req.query.url: ${req.query.url}`);
-            const url = `http://${req.query.url}`;
+            if(!(/https?/i.test(req.query.url))){
+                url = `http://${req.query.url}`;
+            }
             const dom = await(BlackHorse.Run(url));
             const links = await(BlackHorse.Ways(dom, url));
             res.statusCode = 200;
@@ -60,14 +66,15 @@ if (cluster.isMaster) {
 
         } catch (err) {
             res.statusCode = 500;
-            res.send(err);
+            res.send(`url: ${url}, err: ${err.toString()}`);
         }
     }));
 
     app.get('/images', async((req, res, next) => {
+        let url = '';
         try {
             const uid = uuid();
-            let url = req.query.url;
+            url = req.query.url;
             console.log(`id: ${uid}, req.query.url: ${req.query.url}`);
             if(!(/https?/i.test(req.query.url))){
                 url = `http://${req.query.url}`;
@@ -80,13 +87,13 @@ if (cluster.isMaster) {
         } catch (err) {
             console.log('err', err);
             res.statusCode = 500;
-            res.send(err.toString());
+            res.send(`url: ${url}, err: ${err.toString()}`);
         }
     }));
 
     app.get('/', (req, res, next) => {
         res.statusCode = 200;
-        res.send('<a href="links?url=www.google.com">links</a><br /><a href="images?url=www.google.com">images</a>');
+        res.send('<a href="links?url=www.google.com">links</a><br /><a href="images?url=www.google.com">images</a><br /><a href="render?url=www.google.com">render</a>');
     });
     if(process.env.NODE_ENV == 'production'){
         app.listen(process.env.PORT);
