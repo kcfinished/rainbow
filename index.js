@@ -40,7 +40,7 @@ if (cluster.isMaster) {
             if(!(/https?/i.test(req.query.url))){
                 url = `http://${req.query.url}`;
             }
-            const dom = await(BlackHorse.Run(url));
+            const dom = await(BlackHorse.Run(url, true));
             res.statusCode = 200;
             res.send(dom);
 

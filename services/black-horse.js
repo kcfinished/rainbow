@@ -2,21 +2,23 @@ const async = require('asyncawait/async');
 const await = require('asyncawait/await');
 const puppeteer = require('puppeteer');
 
-const run = async((url) => {
+const run = async((url, catchError) => {
     const browser = await(puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], ignoreHTTPSErrors: true }));
     const page = await(browser.newPage());
 
-    page.on("pageerror", (err) => {
-        await(page.close());
-        await(browser.close());
-        throw err;
-    });
+    if (catchError) {
+        page.on("pageerror", (err) => {
+            await(page.close());
+            await(browser.close());
+            throw err;
+        });
 
-    page.on("error", (err) => {
-        await(page.close());
-        await(browser.close());
-        throw err;
-    });
+        page.on("error", (err) => {
+            await(page.close());
+            await(browser.close());
+            throw err;
+        });
+    }
 
     try {
         await(page.setUserAgent('Baymax-Cached'));
