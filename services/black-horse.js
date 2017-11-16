@@ -6,6 +6,18 @@ const run = async((url) => {
     const browser = await(puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], ignoreHTTPSErrors: true }));
     const page = await(browser.newPage());
 
+    page.on("pageerror", (err) => {
+        await(page.close());
+        await(browser.close());
+        throw err;
+    });
+
+    page.on("error", (err) => {
+        await(page.close());
+        await(browser.close());
+        throw err;
+    });
+
     try {
         await(page.setUserAgent('Baymax-Cached'));
         // await(page.setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'));
@@ -16,7 +28,7 @@ const run = async((url) => {
         await(page.close());
         await(browser.close());
         return dom;
-    } catch(err) {
+    } catch (err) {
         await(page.close());
         await(browser.close());
         throw err;
