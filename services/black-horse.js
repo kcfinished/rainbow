@@ -24,8 +24,12 @@ const run = async((url, catchError) => {
         await(page.setUserAgent('Baymax-Cached'));
         // await(page.setUserAgent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'));
         await(page.setViewport({ width: 1920, height: 1080 }));
-        await(page.goto(`${url}`, { waitUntil: 'networkidle', timeout: 30000 }));
+        await(page.goto(`${url}`, { waitUntil: 'networkidle', timeout: 30000, networkIdleTimeout: 300 }));
 
+        var requesturlsstatus = await(page.waitForFunction(function () { return (window).prerenderRequiredAjaxUrls && (window).prerenderRequiredAjaxUrls.checkAllAjaxUrlsCompleted(); }), { polling: 300, timeout: 5000 });
+        // console.log(`requesturlsstatus ${index}`, requesturlsstatus);
+        // await(page.screenshot({ path: `caches/screenshot${index}.png` }));
+        await(page.evaluate(function () { $('script').each(function (i, s) { s.remove(); });  $('*[data-nocache]').each(function (i, s) { s.remove(); }); }));
         var dom = await(page.content());
         await(page.close());
         await(browser.close());
