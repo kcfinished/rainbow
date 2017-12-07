@@ -29,7 +29,7 @@ const run = async((url, catchError) => {
         var requesturlsstatus = await(page.waitForFunction(function () { return (window).prerenderRequiredAjaxUrls && (window).prerenderRequiredAjaxUrls.checkAllAjaxUrlsCompleted(); }), { polling: 300, timeout: 5000 });
         // console.log(`requesturlsstatus ${index}`, requesturlsstatus);
         // await(page.screenshot({ path: `caches/screenshot${index}.png` }));
-        await(page.evaluate(function () { $('script').each(function (i, s) { s.remove(); });  $('*[data-nocache]').each(function (i, s) { s.remove(); }); }));
+        //await(page.evaluate(function () { $('script').each(function (i, s) { s.remove(); });  $('*[data-nocache]').each(function (i, s) { s.remove(); }); }));
         var dom = await(page.content());
         await(page.close());
         await(browser.close());
